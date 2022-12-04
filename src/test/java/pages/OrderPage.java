@@ -1,38 +1,28 @@
-package Pages;
+package pages;
 
 import org.openqa.selenium.*;
 
 public class OrderPage {
 
     private WebDriver driver;
-
+    // локаторы страницы заказа
     private By orderUpperButton = By.className("Button_Button__ra12g"); // локатор кнопки "Заказать" вверху страницы
-
     private By orderMiddleButton = By.className("Button_Middle__1CSJM"); // локатор кнопки "Заказать" посередине страницы
-
     private By nextButton = By.xpath("//button[text()='Далее']"); // локатор кнопки "Далее"
-
     private By orderFinishButton = By.xpath("//div/div[2]/div[3]/button[2]"); // локатор кнопки "Заказать" после заполнения данных
-
     private By yesFromDialogOrder = By.xpath("//button[text()='Да']"); // локатор кнопки "Да" в диалоге оформления заказа
     private By nameString = By.xpath("//input[@placeholder='* Имя']"); // локатор поля ввода "Имя"
-
     private By surnameString = By.xpath(".//input[@placeholder='* Фамилия']"); // локатор поля ввода "Фамилия"
-
     private By addressString = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']"); // локатор поля ввода "Адрес"
-
     private By metroStation = By.xpath(".//input[@placeholder='* Станция метро']"); // локатор поля ввода и выбора "Метро"
-
     private By phoneNumberString = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']"); // локатор поля ввода "Телефон"
-
     private By whenToBringTheScooter = By.xpath(".//input[@placeholder='* Когда привезти самокат']"); // локатор поля выбора "Когда привезти самокат"
-
-    private By rentalPeriod = By.className("Dropdown-placeholder"); // локатор выбора срока аренды
+    private By rentalPeriod = By.className("Dropdown-placeholder"); // локатор поля срока аренды
+    private By rentalPeriodTwoDays = By.xpath(".//div[text()='двое суток']"); // локатор выбора срока аренды на 2 суток
     private By colorScooter = By.className("Checkbox_Label__3wxSf"); // локатор чекбокса выбора цвета самоката
-
     private By orderComment = By.xpath("//input[@placeholder='Комментарий для курьера']"); // локатор поля ввода комментария
-
     private By orderDoneText = By.className("Order_ModalHeader__3FDaJ"); // локатор окна успешного оформления заказа с текстом "Заказ оформлен"
+    private By cookieButton = By.id("rcc-confirm-button"); // локатор кнопки закрытия поп-апа с куками "Да все привыкли"
 
     public OrderPage(WebDriver driver) {
         this.driver = driver;
@@ -92,7 +82,7 @@ public class OrderPage {
     // метод нажатия и выбора срока аренды
     public void chooseRentalPeriod() {
         driver.findElement(rentalPeriod).click();
-        driver.findElement(By.xpath("//div/div[2]/div[2]/div[2]/div[2]/div[1]")).click();
+        driver.findElement(rentalPeriodTwoDays).click();
     }
 
     // метод выбора цвета самоката
@@ -102,7 +92,6 @@ public class OrderPage {
 
     // метод нажатия и ввода комментария
     public void clickAndInputComment(String comment) {
-        //driver.findElement(orderComment).click();
         driver.findElement(orderComment).sendKeys(comment);
     }
 
@@ -123,7 +112,7 @@ public class OrderPage {
 
     // метод закрытия поп-апа с куками
     public void closePopupCookie() {
-        driver.findElement(By.id("rcc-confirm-button")).click();
+        driver.findElement(cookieButton).click();
     }
 
     // метод ввода данных пользователя и перехода на следующий экран по кнопке "Далее"
@@ -146,5 +135,4 @@ public class OrderPage {
         clickYesFromDialogOrder();
         checkOrderDone();
     }
-
 }

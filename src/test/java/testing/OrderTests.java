@@ -1,6 +1,7 @@
-package Testing;
+package testing;
 
-import Pages.OrderPage;
+import org.junit.Before;
+import pages.OrderPage;
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -11,15 +12,22 @@ public class OrderTests {
 
     private WebDriver driver;
 
-    @Test
-    public void orderPositiveTestUpperButton() {
+    @Before
+    public void beforeTest() {
         // драйвер для браузера Chrome
         ChromeOptions options = new ChromeOptions();
         driver = new ChromeDriver(options);
 
-
         // переход на страницу тестового приложения
         driver.get("https://qa-scooter.praktikum-services.ru/");
+    }
+    @After
+    public void tearDown() {
+        driver.quit(); // закрываем браузер
+    }
+
+    @Test
+    public void orderPositiveTestUpperButton() {
 
         OrderPage orderPage = new OrderPage(driver);
         orderPage.clickOrderUpperButton();
@@ -29,30 +37,13 @@ public class OrderTests {
 
     }
 
-    @After
-    public void tearDownFirstTest() {
-        driver.quit(); // закрываем браузер
-    }
-
     @Test
     public void orderPositiveTestMiddleButton() {
-        // драйвер для браузера Chrome
-        ChromeOptions options = new ChromeOptions();
-        driver = new ChromeDriver(options);
-
-
-        // переход на страницу тестового приложения
-        driver.get("https://qa-scooter.praktikum-services.ru/");
 
         OrderPage orderPage = new OrderPage(driver);
         orderPage.scrollAndClickOrderMiddleButton();
         orderPage.closePopupCookie();
         orderPage.inputUserInfo("Михал", "Терентьев", "улица Ленина, д.1", "Лубянка", "79991234567");
         orderPage.inputDeliveryInfoAndOrderDone("Вход со двора");
-    }
-
-    @After
-    public void tearDownSecondTest() {
-        driver.quit(); // закрываем браузер
     }
 }
